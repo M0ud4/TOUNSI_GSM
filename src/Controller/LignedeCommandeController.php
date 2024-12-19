@@ -27,18 +27,15 @@ final class LignedeCommandeController extends AbstractController
     #[Route('/add/{id}', name: 'app_lignede_commande_add', methods: ['GET', 'POST'])]
     public function add(int $id, ProductRepository $productRepository, PanierRepository $panierRepository, EntityManagerInterface $entityManager): Response
     {
-            // Récupérer le produit avec l'ID passé en paramètre
         $product = $productRepository->find($id);
     
         if (!$product) {
             throw $this->createNotFoundException('Produit non trouvé.');
         }
     
-        // Récupérer le panier de l'utilisateur
         $user = $this->getUser();
         $panier = $panierRepository->findOneBy(['user' => $user, 'isActive' => true]);
     
-        // Si aucun panier actif n'existe, en créer un nouveau
         if (!$panier) {
             $panier = new Panier();
             $panier->setUser($user);
@@ -46,18 +43,15 @@ final class LignedeCommandeController extends AbstractController
             $entityManager->persist($panier);
         }
     
-        // Créer une nouvelle ligne de commande
         $ligne = new LignedeCommande();
         $ligne->setProduct($product);
         $ligne->setQuantity('1'); // Exemple, vous pouvez ajuster la logique pour gérer la quantité
         $ligne->setIdPanier($panier);
     
-        // Ajouter la ligne de commande au panier
         $panier->addLignedeCommande($ligne);
         $entityManager->persist($ligne);
         $entityManager->flush();
     
-        // Rediriger vers la page du panier
         return $this->redirectToRoute('app_panier_index');
     }
 

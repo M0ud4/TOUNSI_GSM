@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}À propos de Tounsi GSM{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .about-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 5rem 0;
+        }
+
+        .about-container {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-header {
+            background: linear-gradient(to right, #2c3e50, #3498db);
+            color: white;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .about-header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .user-img-container {
+            text-align: center;
+            margin-top: -75px;
+            margin-bottom: 2rem;
+        }
+
+        .user-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .user-img:hover {
+            transform: scale(1.05);
+        }
+
+        .about-content {
+            padding: 2rem 3rem 3rem;
+            color: #2c3e50;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .mission-box {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .highlight {
+            color: #3498db;
+            font-weight: 600;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<section class="about-section">
+    <div class="container">
+        <div class="about-container">
+            <div class="about-header">
+                <h1>À propos de Tounsi GSM</h1>
+            </div>
+
+            <div class="user-img-container">
+                <img class="user-img" alt="Tounsi GSM" src="{{ asset('maquette/asset/imgs/tounsi.jpg') }}"/>
+            </div>
+
+            <div class="about-content">
+                <p class="lead">
+                    Bienvenue sur <span class="highlight">Tounsi GSM</span>, votre partenaire de confiance pour tous vos besoins en téléphonie mobile et technologies GSM.
+                </p>
+
+                <p>
+                    Depuis notre création, nous nous sommes engagés à fournir des produits de haute qualité et un service client exceptionnel. Notre expertise dans le domaine de la téléphonie mobile nous permet de vous offrir les meilleures solutions adaptées à vos besoins.
+                </p>
+
+                <div class="mission-box">
+                    <h3 class="mb-3">Notre Mission</h3>
+                    <p class="mb-0">
+                        Fournir les meilleurs produits et services pour vous connecter au monde, tout en garantissant une expérience client incomparable et un support technique de qualité.
+                    </p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <h4>Produits Premium</h4>
+                        <p>Large sélection de smartphones et accessoires de qualité</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">🛠️</div>
+                        <h4>Service Expert</h4>
+                        <p>Équipe technique qualifiée pour toutes vos réparations</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">💰</div>
+                        <h4>Prix Compétitifs</h4>
+                        <p>Les meilleurs tarifs pour tous nos produits et services</p>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5">
+                    <a href="#contact" class="btn btn-primary btn-lg">Contactez-nous</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
+{% endblock %}

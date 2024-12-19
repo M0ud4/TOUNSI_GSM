@@ -1,0 +1,163 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Statistiques
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            margin: 20px 0;
+        }
+        @media (min-width: 768px) {
+            .charts-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Statistiques</h1>
+
+        <!-- Info Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-4">Informations Générales</h2>
+                <div class="space-y-3">
+                    <p class="text-gray-700"><span class="font-medium">Total des produits :</span> {{ totalProducts }}</p>
+                    <p class="text-gray-700"><span class="font-medium">Total des marques :</span> {{ totalBrands }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+            <!-- Category Chart -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-4">Graphique des produits par catégorie</h2>
+                <div class="chart-container">
+                    <canvas id="productsByCategoryChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Brand Chart -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-4">Graphique des produits par marque</h2>
+                <div class="chart-container">
+                    <canvas id="productsByBrandChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Graphique des produits par catégorie
+        const ctxCategory = document.getElementById('productsByCategoryChart').getContext('2d');
+        const productsByCategoryChart = new Chart(ctxCategory, {
+            type: 'pie',
+            data: {
+                labels: {{ categoryNames|json_encode|raw }},
+                datasets: [{
+                    label: 'Produits par catégorie',
+                    data: {{ productCounts|json_encode|raw }},
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(153, 102, 255, 0.8)',
+                        'rgba(255, 159, 64, 0.8)'
+                    ],
+                    borderColor: '#ffffff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + ' produits';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Graphique des produits par marque
+        const ctxBrand = document.getElementById('productsByBrandChart').getContext('2d');
+        const productsByBrandChart = new Chart(ctxBrand, {
+            type: 'bar',
+            data: {
+                labels: {{ brandNames|json_encode|raw }},
+                datasets: [{
+                    label: 'Produits par marque',
+                    data: {{ brandProductCounts|json_encode|raw }},
+                    backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        },
+                        ticks: {
+                            padding: 10
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            padding: 10
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.dataset.label + ': ' + tooltipItem.raw + ' produits';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock %}

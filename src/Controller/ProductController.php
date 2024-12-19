@@ -39,8 +39,8 @@ final class ProductController extends AbstractController
             if($file){
                 // checking the existance of the file
                 $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $validName=$slugger->slug($originalFilename); // removing printable caracters
-                $fileName=$validName.'-'.uniqid().'.'.$file->guessExtension(); // new file name
+                $validName=$slugger->slug($originalFilename); 
+                $fileName=$validName.'-'.uniqid().'.'.$file->guessExtension(); 
 
                 try {
                     $file->move($this->getParameter('images_directory'), $fileName); //saving the file

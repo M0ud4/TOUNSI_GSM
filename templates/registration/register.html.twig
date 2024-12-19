@@ -1,0 +1,148 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .register-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .register-card {
+            max-width: 450px;
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        
+        .register-card .card-header {
+            background: transparent;
+            border-bottom: none;
+            padding: 2rem 2rem 1rem;
+            text-align: center;
+        }
+        
+        .register-card .card-body {
+            padding: 2rem;
+        }
+        
+        .form-floating {
+            margin-bottom: 1rem;
+        }
+        
+        .form-control {
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+        }
+        
+        .btn-register {
+            padding: 0.75rem 1rem;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .alert {
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .brand-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+        }
+        
+        .invalid-feedback {
+            font-size: 0.875rem;
+            color: #dc3545;
+            margin-top: 0.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="register-container d-flex align-items-center justify-content-center py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card register-card mx-auto">
+                    <div class="card-header">
+                        <img src="/api/placeholder/80/80" alt="Logo" class="brand-logo">
+                        <h1 class="h3 mb-3">Create Account</h1>
+                        <p class="text-muted">Please fill in your information to create an account</p>
+                    </div>
+                    
+                    <div class="card-body">
+                        {% if form_errors(registrationForm) %}
+                            <div class="alert alert-danger">
+                                {{ form_errors(registrationForm) }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_start(registrationForm) }}
+                            <div class="form-group">
+                                <div class="form-floating">
+                                    {{ form_widget(registrationForm.username, {
+                                        'attr': {
+                                            'class': 'form-control',
+                                            'placeholder': 'Username'
+                                        }
+                                    }) }}
+                                    <label for="{{ registrationForm.username.vars.id }}">Username</label>
+                                </div>
+                                {{ form_errors(registrationForm.username) }}
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-floating">
+                                    {{ form_widget(registrationForm.plainPassword, {
+                                        'attr': {
+                                            'class': 'form-control',
+                                            'placeholder': 'Password'
+                                        }
+                                    }) }}
+                                    <label for="{{ registrationForm.plainPassword.vars.id }}">Password</label>
+                                </div>
+                                {{ form_errors(registrationForm.plainPassword) }}
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-register">
+                                Create Account
+                            </button>
+                        {{ form_end(registrationForm) }}
+
+                        <div class="text-center mt-4">
+                            <p class="text-muted mb-0">
+                                By creating an account, you agree to our
+                                <a href="#" class="text-decoration-none">Terms of Service</a>
+                                and
+                                <a href="#" class="text-decoration-none">Privacy Policy</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <p class="text-muted">
+                        Already have an account? <a href="{{ path('app_login') }}" class="text-decoration-none">Sign in</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
+{% endblock %}
